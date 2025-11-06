@@ -59,7 +59,7 @@ class QuantumLab:
             - Use Python's built-in pow(a, x, N) function
             - This computes modular exponentiation efficiently
         """
-        pass
+        return math.pow(a, x) % N
 
     # =========================================================================
     # Problem 2: Find Period Classically (3 points)
@@ -90,7 +90,9 @@ class QuantumLab:
             - Use modular_exponentiation(a, r, N)
             - Return r when result equals 1
         """
-        pass
+        for r in range(1, N + 1):
+            if self.modular_exponentiation(a, r, N) == 1:
+                return r
 
     # =========================================================================
     # Problem 3: Extract Factors from Period (3 points)
@@ -132,7 +134,12 @@ class QuantumLab:
             - Compute q = gcd(x + 1, N)
             - Return (p, q)
         """
-        pass
+        if r % 2 != 0:
+            return (None, None)
+        x = int(math.pow(a, r / 2) * self.modular_exponentiation(a, r, N))
+        p = math.gcd(x - 1, N)
+        q = math.gcd(x + 1, N)
+        return (p, q)
 
     # =========================================================================
     # Problem 4: Verify Factorization (2 points)
@@ -161,8 +168,13 @@ class QuantumLab:
             - Check if q > 1 and q < N
             - Return True only if all conditions are met
         """
-        pass
-
+        if (p * q) != N:
+            return False
+        if not (p > 1) and (p < N):
+            return False
+        if not (q > 1) and (q < N):
+            return False
+        return True
 
 if __name__ == "__main__":
     lab = QuantumLab()
